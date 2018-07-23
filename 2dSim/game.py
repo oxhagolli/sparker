@@ -32,6 +32,7 @@ class Car:
         self.position += self.velocity.rotate(-self.angle) * dt
         self.angle += degrees(angular_velocity) * dt
 
+
 class ParkingSpot:
     def __init__(self, x, y, screen):
         self.x = x
@@ -57,7 +58,7 @@ class Game:
         current_dir = os.path.dirname(os.path.abspath(__file__))
         image_path = os.path.join(current_dir, "car.png")
         car_image = pygame.image.load(image_path)
-        car = Car(0, 0)
+        car = Car(10, 10)
         ppu = 32
         spots = []
         i = 0
@@ -117,6 +118,9 @@ class Game:
                 spot.draw()
             rotated = pygame.transform.rotate(car_image, car.angle)
             rect = rotated.get_rect()
+            for spot in spots:
+                if rect.colliderect(spot.img.get_rect()):
+                    print("GANG")
             self.screen.blit(rotated, car.position * ppu - (rect.width / 2, rect.height / 2))
             pygame.display.flip()
 
